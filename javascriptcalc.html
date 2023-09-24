@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Calculator</title>
+	<style type="text/css">
+
+		#calculator{
+			width: 400px;
+			 
+			margin:15% auto;
+			background-color: lime;
+			text-align: center;
+			border:4px solid black;
+
+		}
+		#num{
+			width: 300px;
+			background-color: grey;
+
+
+
+		}
+		#oneto9{
+			display: grid;
+			grid-template-columns: 1fr 1fr 1fr;
+
+
+
+		}
+		.cell{
+			 
+			 
+			text-align: center;
+			border:1px solid black;
+		}
+		.cell:hover{
+			border:1px solid white;
+		}
+		#diss  {
+			height: 80px;
+			text-align: end;
+
+		}
+		#clear{
+height: 100px;
+display: flex;
+		}
+		#zero{
+display: flex;
+height: 100px;
+		}
+		#values{
+			display: flex;
+		}
+		#sign{
+			display: grid;
+			 width: 100px;
+		}
+	</style>
+
+</head>
+<body>
+	<div id="calculator">
+		<div id="diss">
+			<div  style="height: 40px; width: 100%;  "  id="display"> </div>
+			<div style="height: 40px; width: 100%;"    id="partial"> </div>
+			
+		</div>
+		<div id="clear">
+			<div  style="width: 50%; background-color: red" class="cell"  onclick="clr()"><h1>AC</h1></div>
+			<div style="width: 25%;background-color: orange" class="cell" id="divide" onclick="call('/')"><h1>/</h1></div>
+			<div style="width: 25%;background-color: orange" class="cell" id="multiply" onclick="call('*')"><h1>*</h1></div>
+		</div>
+		<div id="values">
+			<div id="num">
+				<div id="oneto9"> 
+				<div class="cell" id="seven" onclick="call(7)"><h1>7</h1></div>
+				<div class="cell" id="eight" onclick="call(8)"><h1>8</h1></div>
+				<div class="cell" id="nine" onclick="call(9)"><h1>9</h1></div>
+				<div class="cell" id="four" onclick="call(4)"><h1>4</h1></div>
+				<div class="cell" id="five" onclick="call(5)"><h1>5</h1></div>
+				<div class="cell" id="six" onclick="call(6)"><h1>6</h1></div>
+				<div class="cell" id="one"  onclick="call(1)"><h1>1</h1></div>
+				<div class="cell" id="two" onclick="call(2)"><h1>2</h1></div>
+				<div class="cell" id="three" onclick="call(3)"><h1>3</h1></div>
+
+			                </div>
+				<div id="zero">
+					<div style="width: 67%"  class="cell"  onclick="call(0)"><h1 style="text-align: center; margin-left:50%;" id="zero">0</h1></div>
+					<div style="width: 33%"  class="cell" onclick="call('.')"><h1 style="text-align: center;" id="decimal">.</h1></div>
+				</div>
+			</div>
+			<div id="sign">
+				<div class="cell" style="height: 80px;background-color: orange " id="subtract" onclick="call('-')"><h1>-</h1></div>
+				<div class="cell" style="height: 80px;background-color: orange " id="add" onclick="call('+')"><h1>+</h1></div>
+				<div class="cell" id="equals" style="height: 180px;background-color: lightblue " onclick="output()"><h1>=</h1></div>
+			</div>
+
+			
+
+		</div>
+
+
+		
+	</div>
+<script type="text/javascript">
+	let partial= document.getElementById('partial');
+		
+		let complete=document.getElementById("display");
+
+	function call(n){
+		partial.innerHTML= n+"";
+
+		
+
+		complete.innerHTML+=partial.innerHTML;
+
+		 
+	}
+	function clr(){
+		document.getElementById('partial').innerHTML="0";
+		document.getElementById('display').innerHTML='';
+	}
+	 
+	 function output(){
+	   let equation=complete.innerHTML;
+	   console.log(equation);
+	    let regex=/[^0-9^'.']+/g;
+	let signs=equation.match(regex);
+	console.log("s",signs[0],"s")
+	
+	for(let i in signs){
+		if(signs[i]===" "){console.log("it works")
+				signs.splice(i,1);}
+			 
+	}
+	console.log(signs);
+	let numbers=equation.match(/[0-9|'.']+/g);
+	console.log(numbers);
+	console.log(equation);
+
+	let result= parseFloat(numbers[0]);
+	console.log(result);
+	console.log(numbers.length)
+
+for(let i=0;i<signs.length;i++){
+	if(signs[i].length===1){
+		if((signs[i]==="+")&&numbers[i+1]){result+=parseFloat(numbers[i+1]);}
+	if((signs[i]==="*")&&numbers[i+1]){console.log("multiply"); result*=parseFloat(numbers[i+1]);}
+	if((signs[i]==="-")&&numbers[i+1]){ result-=parseFloat(numbers[i+1]);}
+	if((signs[i]==="/")&&numbers[i+1]){ result/=parseFloat(numbers[i+1]);}
+
+	}
+	else{
+		if((signs[i][signs[i].length-1]==="+")&&numbers[i+1]){result+=parseFloat(numbers[i+1]);}
+	if((signs[i][signs[i].length-1]==="*")&&numbers[i+1]){console.log("multiply"); result*=parseFloat(numbers[i+1]);}
+	if((signs[i][signs[i].length-1]==="-")&&numbers[i+1]){ result-=parseFloat(numbers[i+1]);}
+	if((signs[i][signs[i].length-1]==="/")&&numbers[i+1]){ result/=parseFloat(numbers[i+1]);}
+	}
+
+}
+	 
+	   
+partial.innerHTML=result;
+	 complete.innerHTML+="="+result;
+	 }
+
+	
+</script>
+<script type="text/javascript" src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
+</body>
+</html>
